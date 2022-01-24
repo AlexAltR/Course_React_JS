@@ -19,29 +19,24 @@ function App() {
   ])
   //Получаем данные из управляемого инпута
   const [title, setTitle] = useState('');
-  //Получаем данные из неуправляемого инпута
-  const bodyInputRef = useRef();
+  const [body, setBody] = useState('');
   
-
+  
+  //Функция для создания нового поста
   const addNewPost = (e) => {
-      e.preventDefault()
-      console.log(title)
-      console.log(bodyInputRef.current.value)
+     e.preventDefault();
+      const newPost = {
+         id: Date.now(),
+         title,
+         body
+      }
+      setPosts([...posts, newPost]);
+      setTitle('');
+      setBody('')
   }
 
   return (
     <div className = "App">
-      {/* <Counter/>
-      <ClassCounter/>  */}
-      {/* Классы устарели, сейчас используются функциональные компоненты и хуки */}
-
-      {/* <h1>{value}</h1>
-      <input 
-        type     = "text"
-        value    = {value}
-        onChange = {event => //Событие на изменение данных
-          setValue(event.target.value)}// Извлекаем данные которые вносим в input и передаем их f setValue
-       /> */}
       
       <form>
         {/* Управляемый компонент */}
@@ -54,7 +49,10 @@ function App() {
             placeholder = 'Название поста'/>
          {/* Неуправляемый/Неконтролируемый компонент */}
           <MyInput  
-            ref={bodyInputRef}
+            value    = {body}
+            onChange = {event => 
+               setBody(event.target.value)
+            }
             type = "text" 
             placeholder = 'Описание поста'/>
 
