@@ -12,41 +12,26 @@ import MyInput from './components/UI/input/MyInput';
 import PostFilter from './components/PostFilter';
 import MyModal from './components/UI/MyModal/MyModal';
 import MyButton from './components/UI/button/MyButton';
+import { usePosts } from './hooks/usePosts';
+import axios from 'axios';
 
 function App() {
   //Создаем состояния
   
   //const [value, setValue] = useState('Текст в инпуте')// Состояние для строки input
 
-  const [posts, setPosts] = useState( [
-    {id:1, title: 'аа', body: 'бб'},
-    {id:2, title: 'ее 2', body: 'аа'},
-    {id:3, title: 'вв 3', body: 'яя'},
-  ])
+  const [posts, setPosts] = useState([])
 
-const [filter, setFilter] = useState({sort:'', query:''})
-//Состояние для модального окна
-const [modal, setModal] = useState()
+   const [filter, setFilter] = useState({sort:'', query:''});
+   //Состояние для модального окна
+   const [modal, setModal] = useState();
+   //Состояние для сортировки массива постов и поиска в нем
+   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
-
-
-// Механизм фильтрации для поиска
-// Функция для проверки строки поиска c помощью хука useMemo
-
-const sortedPosts = useMemo( () => {
-   if(filter.sort) {
-      return [...posts].sort( (a, b) => a[filter.sort].localeCompare(b[filter.sort]));
+   async function fetchPosts() {
+      const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
+      setPosts(response.data)
    }
-   return posts;
-}, [filter.sort, posts])
-
-
-// Функция для изменения массива posts на основе поиска c помощью хука useMemo
-const sortedAndSearchedPosts = useMemo( () => {
-   return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.query))
-}, [filter.query, sortedPosts])
- 
-
 
 
 
@@ -62,6 +47,9 @@ const sortedAndSearchedPosts = useMemo( () => {
 
   return (
     <div className = "App">
+      {/* Кнопка для запроса на сервер */}
+      <button onClick={fetchPosts}>GET POSTS</button>
+
       {/* Кнопка для вызова модального окна */}
       <MyButton style={{marginTop: '30px'}} onClick={() => setModal(true)}>
          Создать пост
