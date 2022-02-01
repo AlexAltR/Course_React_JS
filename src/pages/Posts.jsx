@@ -12,7 +12,7 @@ import { useFetching } from './hooks/useFetching';
 import { getPageCount } from './utils/pages';
 import Pagination from './components/UI/pagination/Pagination';
 
-function App () {
+function Posts () {
   //Создаем состояния
   
   //const [value, setValue] = useState('Текст в инпуте')// Состояние для строки input
@@ -114,4 +114,4 @@ function App () {
   );
 }
 
-export default App;
+export default Posts;

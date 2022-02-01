@@ -9,10 +9,10 @@ export const useFetching = (callback) => {
    const [error, setError] = useState('');
 
    // Функция по вызову индикатора события, по обработке ошибки
-   const fetching = async() => {
+   const fetching = async(...args) => {
       try {
          setIsLoading(true);
-         await callback();
+         await callback(...args);
       } catch (e) {
          setError(e.message);
       } finally {
