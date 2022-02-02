@@ -1,8 +1,15 @@
 import React from "react";
 import MyButton from "./UI/button/MyButton";
+import {useNavigate, useLocation, useParams} from 'react-router-dom'
 
 const PostItem = (props) => {
-   //  console.log(props);
+   const routerLocal = useLocation();
+   // console.log(routerLocal);
+   const routerNavig = useNavigate();
+   // console.log(routerNavig);
+   const routerParams = useParams();
+   console.log(routerParams);
+
     return(
         <div className = "post">
         <div className = 'post__content'>
@@ -11,8 +18,9 @@ const PostItem = (props) => {
                     {props.post.body}
                 </div>
                 </div>
-                <div className = 'post_btn'>
-                    <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
+                <div className = 'post_btns'>
+                  <MyButton onClick={() => routerParams}>Открыть</MyButton>  
+                  <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
             </div>
         </div>
     )
