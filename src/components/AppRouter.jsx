@@ -1,17 +1,29 @@
 import React from "react";
-import { Routes, Route } from 'react-router-dom';
-import About from './../pages/About';
-import Posts from './../pages/Posts';
-import Error from './../pages/Error';
+import { Route, Switch, Redirect,  } from 'react-router-dom';
+import { publicRoutes, privateRoutes } from "../router/routes";
+
+
 
 const AppRouter = () => {
    return (
 
-      <Routes>
-         <Route path="/about" element={<About/>}/>
-         <Route path="/posts" element={<Posts/>}/>
-         <Route path="*" element={<Error/>}/>
-      </Routes>
+      <Switch>
+         {privateRoutes.map(route => 
+            <Route
+               component={route.component}
+               path={route.path}
+               exact={route.exact}
+            />
+         )}
+         {publicRoutes.map(route => 
+            <Route
+               component={route.component}
+               path={route.path}
+               exact={route.exact}
+            />
+         )}
+         <Redirect to="/posts"/>
+      </Switch>
 
    )
 }

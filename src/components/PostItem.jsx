@@ -1,14 +1,11 @@
 import React from "react";
 import MyButton from "./UI/button/MyButton";
-import {useNavigate, useLocation, useParams} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 const PostItem = (props) => {
-   const routerLocal = useLocation();
-   // console.log(routerLocal);
-   const routerNavig = useNavigate();
-   // console.log(routerNavig);
-   const routerParams = useParams();
-   console.log(routerParams);
+
+   const router = useHistory();
+   // console.log(router);
 
     return(
         <div className = "post">
@@ -19,7 +16,7 @@ const PostItem = (props) => {
                 </div>
                 </div>
                 <div className = 'post_btns'>
-                  <MyButton onClick={() => routerParams}>Открыть</MyButton>  
+                  <MyButton onClick={() => router.push(`/posts/${props.post.id}`)}>Открыть</MyButton>  
                   <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
             </div>
         </div>
